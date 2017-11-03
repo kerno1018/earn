@@ -1,9 +1,7 @@
 package com.example.ico.market.entity;
 
-import com.example.db.PriceDB;
 import com.example.util.HttpUtil;
 
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -20,7 +18,6 @@ public class AllCoin implements Serializable {
     private Double ethDollor;
     private Double qtumDollor;
     private Double dollor;
-    @Transient
     private String key;
 
     public Double getDollor() {

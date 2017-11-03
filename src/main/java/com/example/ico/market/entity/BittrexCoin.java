@@ -1,7 +1,6 @@
 package com.example.ico.market.entity;
 
 import com.example.util.HttpUtil;
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -24,7 +23,6 @@ public class BittrexCoin implements Serializable {
     private String created;
     private Double btcDollor;
     private Double ethDollor;
-    @Transient
     private String key;
 
     public String getMarketname() {
