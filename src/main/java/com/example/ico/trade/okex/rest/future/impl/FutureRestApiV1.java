@@ -2,9 +2,13 @@ package com.example.ico.trade.okex.rest.future.impl;
 
 import com.example.ico.trade.okex.rest.HttpUtilManager;
 import com.example.ico.trade.okex.rest.MD5Util;
+import com.example.ico.trade.okex.rest.MySecureProtocolSocketFactory;
 import com.example.ico.trade.okex.rest.StringUtil;
 import com.example.ico.trade.okex.rest.future.IFutureRestApi;
+import com.example.ico.trade.okex.util.OKConstant;
 import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.protocol.Protocol;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,22 +20,24 @@ import java.util.Map;
  * @author zc
  * 
  */
+@Component
 public class FutureRestApiV1 implements IFutureRestApi {
 
-	private String secret_key;
+	private String secret_key=OKConstant.SECRETKEY;
 	
-	private String api_key;
+	private String api_key=OKConstant.APIKEY;
 	
-	private String url_prex;
-
+	private String url_prex= OKConstant.BASE_URI;
+	public FutureRestApiV1(){
+		Protocol myhttps = new Protocol("https", new MySecureProtocolSocketFactory(), 443);
+		Protocol.registerProtocol("https ", myhttps);
+	}
 	public FutureRestApiV1(String url_prex,String api_key, String secret_key) {
-		this.api_key = api_key;
-		this.secret_key = secret_key;
-		this.url_prex = url_prex;
+		this();
 	}
 
 	public FutureRestApiV1(String url_prex) {
-		this.url_prex = url_prex;
+		this();
 
 	}
 

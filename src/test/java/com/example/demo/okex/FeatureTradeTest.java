@@ -16,20 +16,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 
-public class FeatureTradeTest {
-    private IFutureRestApi futureGetV1;
-    private IFutureRestApi futurePostV1;
-    private String api_key = OKConstant.APIKEY;  //OKCoin申请的apiKey
-    private String secret_key = OKConstant.SECRETKEY;  //OKCoin申请的secretKey
-    private String url_prex = OKConstant.BASE_URI;  //注意：请求URL 国际站https://www.okcoin.com ; 国内站https://www.okcoin.cn
-    ObjectMapper mapp;
+public class FeatureTradeTest extends BaseTest{
 
-    @BeforeMethod
-    public void init(){
-        futureGetV1 = new FutureRestApiV1(OKConstant.BASE_URI);
-        futurePostV1 = new FutureRestApiV1(url_prex, api_key,secret_key);
-        mapp = new ObjectMapper();
-    }
     @Test
     public void featureTickerTest() throws IOException {
         //期货行情信息
@@ -78,7 +66,7 @@ public class FeatureTradeTest {
         double ask = price.getTicker().getLast().doubleValue()*0.97;
         //期货下单
 //        1:开多(done)   2:开空   3:平多   4:平空
-        String tradeResultV1 = futurePostV1.future_trade("btc_usd","this_week", ask+"", "1", "2", "0");
+        String tradeResultV1 = futurePostV1.future_trade("btc_usd","this_week", ask+"", "1", "1", "0");
         ObjectMapper mapp = new ObjectMapper();
         FeatureOrder tradeJSV1 = mapp.readValue(tradeResultV1, FeatureOrder.class);
         assertTrue(tradeJSV1.getResult());
@@ -90,7 +78,7 @@ public class FeatureTradeTest {
            assertTrue(info.getResult());
            assertNotNull(info.getOrders());
            assertTrue(info.getOrders().size()>0);
-           assertFalse(info.getOrders().get(0).isSuccess());
+//           assertFalse(info.getOrders().get(0).isSuccess());
             //取消订单
             FeatureOrder cancelOrder = mapp.readValue(futurePostV1.future_cancel("btc_usd", "this_week",tradeJSV1.getOrder_id()),FeatureOrder.class);
             assertNotNull(cancelOrder);
@@ -118,6 +106,7 @@ public class FeatureTradeTest {
         assertNotNull(info.getInfo().getBtc());
         assertTrue(Double.valueOf(info.getInfo().getBtc().getAccount_rights().toString())>0.0);
     }
+
 
 
 }

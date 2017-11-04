@@ -1,4 +1,4 @@
-package com.example.dao.exchange.entity;
+package com.example.dao.entity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

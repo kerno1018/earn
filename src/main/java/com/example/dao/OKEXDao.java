@@ -1,10 +1,8 @@
-package com.example.dao.exchange;
+package com.example.dao;
 
-import com.example.dao.exchange.entity.OKex;
+import com.example.dao.entity.OKex;
 import com.example.util.HttpUtil;
-import com.example.util.TimeLimit;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Test;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
