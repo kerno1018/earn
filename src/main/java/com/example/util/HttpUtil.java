@@ -4,6 +4,7 @@ import com.example.db.PriceDB;
 import com.example.stock.entity.SinaBean;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.junit.Test;
@@ -53,4 +54,5 @@ public class HttpUtil {
         }
         return null;
     }
+
 }
