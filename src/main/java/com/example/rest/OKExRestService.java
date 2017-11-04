@@ -1,7 +1,7 @@
 package com.example.rest;
 
-import com.example.dao.exchange.OKEXDao;
-import com.example.dao.exchange.entity.OKex;
+import com.example.dao.OKEXDao;
+import com.example.dao.entity.OKex;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

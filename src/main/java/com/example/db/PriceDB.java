@@ -4,6 +4,7 @@ import com.example.stock.entity.SinaBean;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PriceDB {
     public static List<SinaBean> collectMoney = new ArrayList<>();
@@ -23,4 +24,5 @@ public class PriceDB {
         return db.get(1).get(0).add(flag);
     }
 
+    public static Map<String,Double> featureData = new ConcurrentHashMap<>();
 }
