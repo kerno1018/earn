@@ -38,5 +38,15 @@
       "init":"",
       "afterRender":"after"
     }]
+  },
+  {
+    "path":"#orders",
+    "pageFragments":[{
+      "scope":"#container",
+      "templatePath":"templates/okex/okexorders",
+      "vmPath":"js/okex/okexorders",
+      "init":"",
+      "afterRender":"after"
+    }]
   }
 ]

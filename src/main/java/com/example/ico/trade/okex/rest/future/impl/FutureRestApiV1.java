@@ -369,9 +369,9 @@ public class FutureRestApiV1 implements IFutureRestApi {
 		if (!StringUtil.isEmpty(symbol )) {
 			params.put("symbol", symbol);
 		}
-		if (!StringUtil.isEmpty(status )) {
-			params.put("status", status);
-		}
+//		if (!StringUtil.isEmpty(status )) {
+//			params.put("status", status);
+//		}
 		String sign = MD5Util.buildMysignV1(params, secret_key);
 		params.put("sign", sign);
 		// 发送post请求
