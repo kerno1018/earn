@@ -20,12 +20,10 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.conn.ConnectionKeepAliveStrategy;
-import org.apache.http.impl.client.DefaultConnectionKeepAliveStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HttpContext;
 
 
 
@@ -37,36 +35,12 @@ import org.apache.http.protocol.HttpContext;
 public class HttpUtilManager {
 
 	private static HttpUtilManager instance = new HttpUtilManager();
-	private static HttpClient client;
+	private static CloseableHttpClient client;
 	private static long startTime = System.currentTimeMillis();
-	public  static PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
-	private static ConnectionKeepAliveStrategy keepAliveStrat = new DefaultConnectionKeepAliveStrategy() {
-
-	     public long getKeepAliveDuration(  
-	            HttpResponse response,
-	            HttpContext context) {
-	        long keepAlive = super.getKeepAliveDuration(response, context);  
-	        
-	        if (keepAlive == -1) {  
-	            keepAlive = 5000;  
-	        }  
-	        return keepAlive;  
-	    }  
-	  
-	};
 	private HttpUtilManager() {
-		client = HttpClients.custom().setConnectionManager(cm).setKeepAliveStrategy(keepAliveStrat).build();
+		client = HttpClients.createDefault();
 	}
 
-    public static void IdleConnectionMonitor(){
-		
-		if(System.currentTimeMillis()-startTime>30000){
-			 startTime = System.currentTimeMillis();
-			 cm.closeExpiredConnections();  
-             cm.closeIdleConnections(30, TimeUnit.SECONDS);
-		}
-	}
-	 
 	private static RequestConfig requestConfig = RequestConfig.custom()
 	        .setSocketTimeout(20000)
 	        .setConnectTimeout(20000)
@@ -92,7 +66,6 @@ public class HttpUtilManager {
 	
 	public String requestHttpGet(String url_prex,String url,String param) throws HttpException, IOException{
 		
-		IdleConnectionMonitor();
 		url=url_prex+url;
 		if(param!=null && !param.equals("")){
 		        if(url.endsWith("?")){
@@ -116,6 +89,7 @@ public class HttpUtilManager {
 		}finally{
 			if(is!=null){
 			    is.close();
+			    client.close();
 			}
 		}
 		return responseData;
@@ -123,7 +97,6 @@ public class HttpUtilManager {
 	
 	public String requestHttpPost(String url_prex,String url,Map<String,String> params) throws HttpException, IOException{
 		
-		IdleConnectionMonitor();
 		url=url_prex+url;
 		HttpPost method = this.httpPostMethod(url);
 		List<NameValuePair> valuePairs = this.convertMap2PostParams(params);
@@ -143,6 +116,7 @@ public class HttpUtilManager {
 		}finally{
 			if(is!=null){
 			    is.close();
+				client.close();
 			}
 		}
 		return responseData;

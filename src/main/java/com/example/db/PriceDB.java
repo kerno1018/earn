@@ -1,5 +1,6 @@
 package com.example.db;
 
+import com.example.ico.trade.okex.entity.FeatureUserInfo;
 import com.example.stock.entity.SinaBean;
 
 import java.math.BigDecimal;
@@ -25,4 +26,5 @@ public class PriceDB {
     }
 
     public static Map<String,Double> featureData = new ConcurrentHashMap<>();
+    public static volatile FeatureUserInfo account = new FeatureUserInfo();
 }
