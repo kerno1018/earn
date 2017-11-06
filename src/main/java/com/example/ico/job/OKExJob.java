@@ -52,6 +52,11 @@ public class OKExJob {
         }
     }
 
+    @Scheduled(fixedDelay = SECOND * 2)
+    public void cleanFeature(){
+        service.cleanFeature();
+    }
+
     @Scheduled(fixedDelay = SECOND * 5)
     public void syncFeatureOrderInfo(){
         service.updateOrderStatus();

@@ -111,6 +111,7 @@ public class FeatureTradeTest extends BaseTest{
     public void check() throws IOException{
 //        //期货用户持仓查询
         FeaturePositon po = mapp.readValue(futurePostV1.future_position("btc_usd", "this_week"),FeaturePositon.class);
+        FeaturePositon po1 = mapp.readValue(futurePostV1.future_position("btc_usd", "quarter"),FeaturePositon.class);
         assertTrue(po.getResult());
         assertNotNull(po.getForce_liqu_price());
         assertNotNull(po.getHolding());

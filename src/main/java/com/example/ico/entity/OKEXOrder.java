@@ -29,6 +29,11 @@ public class OKEXOrder implements Serializable {
     private Date createDate;
     @Column(name = "TRADE_TYPE")
     private String tradeType;
+    @Column(name = "COUPLE")
+    private String couple;
+    @Column(name="HOLDING")
+    private Boolean holding;
+
 
     public Long getId() {
         return id;
@@ -110,5 +115,21 @@ public class OKEXOrder implements Serializable {
 
     public void setOrderType(String orderType) {
         this.orderType = orderType;
+    }
+
+    public String getCouple() {
+        return couple;
+    }
+
+    public void setCouple(String couple) {
+        this.couple = couple;
+    }
+
+    public Boolean getHolding() {
+        return holding;
+    }
+
+    public void setHolding(Boolean holding) {
+        this.holding = holding;
     }
 }

@@ -22,8 +22,10 @@ public class OKEXOrderRestService {
     public String orderList(){
         List<OKEXOrder> orderList = service.getOrders();
         ObjectMapper mapp = new ObjectMapper();
-        Map<String,List<OKEXOrder>> result = new HashMap<>();
+        Map<String,Object> result = new HashMap<>();
         result.put("data",orderList);
+        result.put("recordsTotal",orderList.size());
+        result.put("recordsFiltered",orderList.size());
         try {
             return mapp.writeValueAsString(result);
         } catch (JsonProcessingException e) {
