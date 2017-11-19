@@ -125,9 +125,9 @@ public class FutureRestApiV1 implements IFutureRestApi {
 		String result = null;
 		try {
 			result = httpUtil.requestHttpGet(url_prex,FUTURE_TICKER_URL, param);
-		} catch (org.apache.http.HttpException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (org.apache.http.HttpException e) {
 			e.printStackTrace();
 		}
 		// System.out.println(result);
@@ -227,9 +227,9 @@ public class FutureRestApiV1 implements IFutureRestApi {
 		String result = null;
 		try {
 			result = httpUtil.requestHttpPost(url_prex,FUTURE_CANCEL_URL, params);
-		} catch (org.apache.http.HttpException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (org.apache.http.HttpException e) {
 			e.printStackTrace();
 		}
 		// System.out.println(result);

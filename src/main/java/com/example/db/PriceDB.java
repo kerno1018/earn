@@ -1,5 +1,6 @@
 package com.example.db;
 
+import com.example.ico.trade.okex.entity.FeaturePrice;
 import com.example.ico.trade.okex.entity.FeatureUserInfo;
 import com.example.stock.entity.SinaBean;
 
@@ -12,6 +13,7 @@ public class PriceDB {
     public static Map<String,List<List<BigDecimal>>> lmc = new HashMap<>();
     public static Map<String,TreeMap<String,String>> collectValueCoin = new HashMap<>();
     static BigDecimal flag = BigDecimal.valueOf(0.00000001);
+
     public static BigDecimal getAskVolumn(List<List<BigDecimal>> db){
         return db.get(0).get(1);
     }
@@ -26,5 +28,9 @@ public class PriceDB {
     }
 
     public static Map<String,Double> featureData = new ConcurrentHashMap<>();
+    public static Map<String,FeaturePrice> featureBTC = new ConcurrentHashMap<>();
     public static volatile FeatureUserInfo account = new FeatureUserInfo();
+    public static volatile Integer maxAllowCont = 0;
+    public static volatile Integer levelRage = 10; // default level rage
+    public static Integer eachOrderCont = 3;
 }

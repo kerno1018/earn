@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,8 +20,10 @@ public class OKExRestService {
     @GetMapping("/list")
     public String exList(@RequestParam("coinType") String type){
         List<OKex> result = exDao.getListByType(type);
-        Map<String,List<OKex>> map = new HashMap<>();
+        Map<String,Object> map = new HashMap<>();
         map.put("data",result);
+        map.put("recordsTotal",result.size());
+        map.put("recordsFiltered",result.size());
         ObjectMapper mapp = new ObjectMapper();
         try {
            return mapp.writeValueAsString(map);
@@ -58,8 +61,10 @@ public class OKExRestService {
             values.put("targetPrice",result.get(j).getLast());
             list.add(values);
         }
-        Map<String,List<Map<String,Object>>> map = new HashMap<>();
+        Map<String,Object> map = new HashMap<>();
         map.put("data",list);
+        map.put("recordsTotal",list.size());
+        map.put("recordsFiltered",list.size());
         ObjectMapper mapp = new ObjectMapper();
         try {
             return mapp.writeValueAsString(map);
@@ -68,5 +73,6 @@ public class OKExRestService {
         }
         return "";
     }
+
 
 }

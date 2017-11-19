@@ -48,5 +48,15 @@
       "init":"",
       "afterRender":"after"
     }]
+  },
+  {
+    "path":"#account",
+    "pageFragments":[{
+      "scope":"#container",
+      "templatePath":"templates/okex/account",
+      "vmPath":"js/okex/account",
+      "init":"",
+      "afterRender":"after"
+    }]
   }
 ]

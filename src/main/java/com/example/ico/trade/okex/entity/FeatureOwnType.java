@@ -8,6 +8,7 @@ public class FeatureOwnType implements Serializable{
     private FeatureOwn bcc;
     private FeatureOwn etc;
     private FeatureOwn eth;
+    private FeatureOwn bch;
 
     public FeatureOwn getBtc() {
         return btc;
@@ -47,5 +48,13 @@ public class FeatureOwnType implements Serializable{
 
     public void setEth(FeatureOwn eth) {
         this.eth = eth;
+    }
+
+    public FeatureOwn getBch() {
+        return bch;
+    }
+
+    public void setBch(FeatureOwn bch) {
+        this.bch = bch;
     }
 }
