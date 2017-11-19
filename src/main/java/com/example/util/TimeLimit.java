@@ -9,9 +9,14 @@ public class TimeLimit {
         return time.getTimeInMillis() <= new Date().getTime();
     }
 
-    protected Calendar dataProtectedTime = Calendar.getInstance();
-    public Boolean canGetNew(){
+    private static volatile Calendar dataProtectedTime = Calendar.getInstance();
+    public static Boolean canGetNew(){
         return dataProtectedTime.getTimeInMillis() <= new Date().getTime();
+    }
+
+    public static synchronized void delay(){
+        dataProtectedTime.setTime(new Date());
+        dataProtectedTime.add(Calendar.MINUTE,15);
     }
 
 }

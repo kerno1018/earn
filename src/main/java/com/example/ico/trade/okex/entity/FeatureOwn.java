@@ -1,5 +1,8 @@
 package com.example.ico.trade.okex.entity;
 
+import com.example.db.PriceDB;
+
+import javax.persistence.Transient;
 import java.io.Serializable;
 
 public class FeatureOwn implements Serializable{
@@ -48,4 +51,5 @@ public class FeatureOwn implements Serializable{
     public void setRisk_rate(Object risk_rate) {
         this.risk_rate = risk_rate;
     }
+
 }
