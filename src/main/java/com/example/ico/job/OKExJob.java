@@ -2,6 +2,7 @@ package com.example.ico.job;
 
 import com.example.db.PriceDB;
 import com.example.ico.service.OKEXService;
+import com.example.ico.trade.okex.entity.FeaturePositionInfo;
 import com.example.ico.trade.okex.entity.FeaturePrice;
 import com.example.ico.trade.okex.entity.FeatureUserInfo;
 import com.example.ico.trade.okex.rest.future.IFutureRestApi;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component
+//@Component
 public class OKExJob {
     public final static long SECOND = 1 * 1000;
     Logger logger = LoggerFactory.getLogger(OKExJob.class);
@@ -25,15 +26,48 @@ public class OKExJob {
     @Autowired
     private OKEXService service;
 
+    private Boolean hadEnoughMoney(){
+        return PriceDB.account != null && PriceDB.account.getResult()!=null && PriceDB.account.getResult() && PriceDB.account.getInfo().getBtc() != null && Double.valueOf(PriceDB.account.getInfo().getBtc().getAccount_rights()+"")>0.0;
+
+    }
+
+    public void moveThisWeekToNextWeek(){
+        if(TimeLimit.canGetNew()) {
+            if(hadEnoughMoney()) {
+
+            }
+        }
+    }
+
+    public void sell(){
+        if (TimeLimit.canGetNew()) {
+            try {
+                String result = featureApi.future_position("btc_usd","this_week");
+                PriceDB.positionThisWeek = mapp.readValue(result, FeaturePositionInfo.class);
+//                result = featureApi.future_position("btc_usd","next_week");
+//                PriceDB.positionNextWeek = mapp.readValue(result, FeaturePositionInfo.class);
+                result = featureApi.future_position("btc_usd","quarter");
+                PriceDB.positionQuarter = mapp.readValue(result, FeaturePositionInfo.class);
+
+                service.sell();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
     @Scheduled(fixedDelay = SECOND *30)
-    public void rolling(){
+    public void buy(){
         String result = null;
         try {
             if (TimeLimit.canGetNew()) {
                 result = featureApi.future_userinfo();
                 PriceDB.account = mapp.readValue(result,FeatureUserInfo.class);
                 FeaturePrice price = null;
-                if(PriceDB.account != null && PriceDB.account.getResult()!=null && PriceDB.account.getResult() && PriceDB.account.getInfo().getBtc() != null && Double.valueOf(PriceDB.account.getInfo().getBtc().getAccount_rights()+"")>0.0 ) {
+                if(hadEnoughMoney()) {
                     price = mapp.readValue(featureApi.future_ticker("btc_usd", "this_week"), FeaturePrice.class);
                     PriceDB.featureData.put("T", price.getTicker().getLast().doubleValue());
 //                    PriceDB.featureBTC.put("this_week", price);
@@ -63,7 +97,7 @@ public class OKExJob {
 //        service.cleanFeature();
     }
 
-//    @Scheduled(fixedDelay = SECOND * 5)
+    @Scheduled(fixedDelay = SECOND * 5)
     public void syncFeatureOrderInfo(){
         service.updateOrderStatus();
     }
