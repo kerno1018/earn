@@ -1,5 +1,6 @@
 package com.example.db;
 
+import com.example.ico.trade.okex.entity.FeaturePositionInfo;
 import com.example.ico.trade.okex.entity.FeaturePrice;
 import com.example.ico.trade.okex.entity.FeatureUserInfo;
 import com.example.stock.entity.SinaBean;
@@ -13,6 +14,9 @@ public class PriceDB {
     public static Map<String,List<List<BigDecimal>>> lmc = new HashMap<>();
     public static Map<String,TreeMap<String,String>> collectValueCoin = new HashMap<>();
     static BigDecimal flag = BigDecimal.valueOf(0.00000001);
+    public static FeaturePositionInfo positionThisWeek = new FeaturePositionInfo();
+    public static FeaturePositionInfo positionNextWeek = new FeaturePositionInfo();
+    public static FeaturePositionInfo positionQuarter = new FeaturePositionInfo();
 
     public static BigDecimal getAskVolumn(List<List<BigDecimal>> db){
         return db.get(0).get(1);

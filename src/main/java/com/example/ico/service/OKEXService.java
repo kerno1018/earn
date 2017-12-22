@@ -44,10 +44,15 @@ public class OKEXService {
             Double qt = MathUtil.formatDoubleWith2point((quarter - thisWeek)/thisWeek);
             Double qn = MathUtil.formatDoubleWith2point((quarter - nextWeek)/nextWeek);
             Double nt = MathUtil.formatDoubleWith2point((nextWeek - thisWeek)/thisWeek);
+            // move to next week
+            if(thisWeek.equals(nextWeek)){
+                // sell this week
+                // buy next week
+            }
             String couple = new Date().getTime()+"";
             logger.info(qt+"---"+qn+"---"+nt);
             // 季度/当周 小于等于 下周/当周
-            if(qt <0 && qt <= -0.05){
+            if(qt <0 && qt <= -0.5){
                 if(canBuy()) {
 //                        quarter = 6000.0;
 //                        thisWeek = 8000.0;
@@ -61,18 +66,19 @@ public class OKEXService {
                     processBuyStuff(thisWeek,nextWeek,quarter,qt,thisWeek+"","this_week","1","1",couple);
                 }
             }
-//        if(qt <0 && qt >= -0.03){
-//            if(canSell()) {
-//                //1:开多(done)   2:开空   3:平多   4:平空
-//                processBuyStuff(thisWeek, nextWeek, quarter, qt, quarter + "", "quarter", "3", "1", couple);
-//                processBuyStuff(thisWeek, nextWeek, quarter, qt, thisWeek + "", "this_week", "4", "1", couple);
-//            }
-//        }else if(qt > 0 && qt <= 0.03){
-//            if (canSell()){
-//                processBuyStuff(thisWeek,nextWeek,quarter,qt,quarter+"","quarter","4","1",couple);
-//                processBuyStuff(thisWeek,nextWeek,quarter,qt,thisWeek+"","this_week","3","1",couple);
-//            }
-//        }
+        // TODO need add position check in here
+        if(qt <0 && qt >= -0.03){
+            if(canSell()) {
+                //1:开多(done)   2:开空   3:平多   4:平空
+                processBuyStuff(thisWeek, nextWeek, quarter, qt, quarter + "", "quarter", "3", "1", couple);
+                processBuyStuff(thisWeek, nextWeek, quarter, qt, thisWeek + "", "this_week", "4", "1", couple);
+            }
+        }else if(qt > 0 && qt <= 0.03){
+            if (canSell()){
+                processBuyStuff(thisWeek,nextWeek,quarter,qt,quarter+"","quarter","4","1",couple);
+                processBuyStuff(thisWeek,nextWeek,quarter,qt,thisWeek+"","this_week","3","1",couple);
+            }
+        }
 
 
     }
@@ -121,9 +127,9 @@ public class OKEXService {
         return unavliable != null && unavliable.size() == 0;
     }
     private Boolean canSell(){
-        return false;
-//        List unavliable = orderDao.getManager().createQuery("from OKEXOrder where complement=false and tradeType in (3,4)").getResultList();
-//        return unavliable != null && unavliable.size() == 0;
+//        return true;
+        List unavliable = orderDao.getManager().createQuery("from OKEXOrder where complement=false and tradeType in (3,4)").getResultList();
+        return unavliable != null && unavliable.size() == 0;
     }
 
     @Transactional
@@ -232,5 +238,9 @@ public class OKEXService {
                 System.out.println("sell stuff end --- end ");
             }
         }).start();
+    }
+
+    public void sell() {
+
     }
 }
