@@ -42,6 +42,9 @@ public class OKExRestService {
         if(type.startsWith("ltc")){
             typeShow = "LTC";
         }
+        if(type.startsWith("eth")){
+            typeShow = "ETH";
+        }
         for(int i=0;i<result.size();i++){
             for(int j=i+1;j<result.size();j++){
                 values = new HashMap<>();

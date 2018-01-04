@@ -28,7 +28,7 @@ public abstract class OtcBtcApi extends Earn {
             e.printStackTrace();
         }
         org.jsoup.nodes.Document doc = Jsoup.parse(response, "UTF-8");
-        org.jsoup.select.Elements elements = doc.getElementsByAttributeValue("class","can-buy-count");
+        org.jsoup.select.Elements elements = doc.getElementsByAttributeValue("class","recommend-card__price");
         if(elements.size()>0){
             price = Double.valueOf(elements.get(0).text().split(" ")[0].replace(",",""));
         }else{

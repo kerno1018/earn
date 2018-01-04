@@ -15,6 +15,7 @@ import java.util.Map;
 public abstract class OKExApi extends Earn {
 
     HttpClient httpClient;
+    public static String type="sellTradingOrders";
     public OKExApi(HttpClient httpClient){
         this.httpClient = httpClient;
     }
@@ -30,12 +31,13 @@ public abstract class OKExApi extends Earn {
         ObjectMapper mapp = new ObjectMapper();
         try {
             Map<String,Map<String,List<Map>>> map = mapp.readValue(response, Map.class);
-            List<Map> all = map.get("data").get("sellTradingOrders");
+            List<Map> all = map.get("data").get(type);
+//            List<Map> all = map.get("data").get("sellTradingOrders");
             if(all.size()==0){
                 price = 0.0;
                 return;
             }
-            Map bean = all.get(all.size()-1);
+            Map bean = all.get(type.equalsIgnoreCase("buyTradingOrders") ? 0 : all.size() -1);
 //            System.out.print(bean.get("clientName"));
 //            System.out.print(" "+ bean.get("availableAmount") +" ");
 //            System.out.println();
