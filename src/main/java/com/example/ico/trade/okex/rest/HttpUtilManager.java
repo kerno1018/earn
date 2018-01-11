@@ -40,6 +40,7 @@ import org.apache.http.impl.client.DefaultConnectionKeepAliveStrategy;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
 import org.apache.log4j.Logger;
@@ -57,6 +58,7 @@ public class HttpUtilManager {
 	private org.slf4j.Logger logger = LoggerFactory.getLogger(HttpUtilManager.class);
 	private static HttpUtilManager instance = new HttpUtilManager();
 	private static HttpClient client;
+	public static String cookie="";
 	private static long startTime = System.currentTimeMillis();
 	public  static PoolingHttpClientConnectionManager cm = null;
 	private static ConnectionKeepAliveStrategy keepAliveStrat = new DefaultConnectionKeepAliveStrategy() {
@@ -133,6 +135,7 @@ public class HttpUtilManager {
 		}
 		HttpRequestBase method = this.httpGetMethod(url);
 		method.setConfig(requestConfig);
+		method.addHeader(new BasicHeader("cookie",cookie));
 		HttpEntity entity = null;
 		try{
 			HttpResponse response = client.execute(method);

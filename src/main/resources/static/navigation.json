@@ -20,11 +20,31 @@
     }]
   },
   {
+    "path":"#eth",
+    "pageFragments":[{
+      "scope":"#container",
+      "templatePath":"templates/okex/okex",
+      "vmPath":"js/okex/eth",
+      "init":"",
+      "afterRender":"after"
+    }]
+  },
+  {
     "path":"#ltcsltc",
     "pageFragments":[{
       "scope":"#container",
       "templatePath":"templates/okex/okexfeaturecompare",
       "vmPath":"js/okex/ltcsltc",
+      "init":"",
+      "afterRender":"after"
+    }]
+  },
+  {
+    "path":"#ethseth",
+    "pageFragments":[{
+      "scope":"#container",
+      "templatePath":"templates/okex/okexfeaturecompare",
+      "vmPath":"js/okex/ethseth",
       "init":"",
       "afterRender":"after"
     }]

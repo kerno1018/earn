@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class Listener implements Runnable{
     Map<String,List<Earn>> map = new HashMap<>();
-
+    public static Double inter = 30.0;
     @Override
     public void run(){
             for(List<Earn> list : map.values()){
@@ -33,18 +33,18 @@ public class Listener implements Runnable{
                 return;
             }
             Double priminum = Math.abs(valueA-valueB)/valueB*100;
-            if(priminum >=2 ){
-               new Thread(new Ring()).start();
+            if(priminum >=1.8 || Math.abs(valueA-valueB)>=inter){
+                new Thread(new Ring()).start();
             }
             if(priminum>=3){
                 try {
-                    new Thread(new Ring()).start();
-                    EmailSender.send(false,"418697994@qq.com",key+"priminum"+priminum,priminum+"  ");
+                    // new Thread(new Ring()).start();
+//                    EmailSender.send(false,"418697994@qq.com",key+"priminum"+priminum,priminum+"  ");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            System.out.println(" ----------------- ---------"+key+" Priminum:"+(priminum)+"%, 价差："+(valueA-valueB));
+            System.out.println(" *** "+key+" Priminum:"+(priminum)+"%, 价差："+(valueA-valueB) +" otc:"+valueA +", okex:"+valueB);
         }
     }
     public void addListener(String key,List<Earn> listeners){
