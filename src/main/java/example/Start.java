@@ -22,21 +22,14 @@ import java.util.concurrent.Executors;
 public class Start {
     static HttpClient okExClient;
     static  HttpClient otcClient;
-    public static void init(String cookie){
+    static String cookie="perm=4B64C7DAD0916810A517540F40CBB1F7; Hm_lvt_01a61555119115f9226e2c15e411694e=1504611883,1504865646,1505056916,1505134539; closesettings=2049; _umdata=C234BF9D3AFA6FE75D4332347B142875268FDB2304BB377E66A9E10A9C9FA4576E8C25633DC94EA0CD43AD3E795C914C0978C2A6FE45BE6BA07DC5FDB9914CA6; __cfduid=d76df84658a4877729189206fc48a807f1515106264; market_version=0; first_ref=\"https://www.okex.com/c2c/trade/openTrade.do\"; lp=\"https://www.okex.com/spot/trade/accountBalance.do\"; __zlcmid=j0gp05UmrEBfqI; coin_session_logininfo=\"\"; coin_session_id_o=b63c0cca-4f30-4be7-83d1-c14f555fb61d83e02b8349461230; coin_session_nikename=185****2610; coin_session_user_id=b63c0cca-4f30-4be7-83d1-c14f555fb61d83e02b8349461230; language=0; future_contract_number_ETH=1; CONTRACT_TYPE_ETH=1; future_contract_number_BTC=2; CONTRACT_TYPE_BTC=2; tradetype=0; symbol=btc_usdt; future_contract_type_BTC=this_week; treatyType_Btc=201801190000034; future_contract_type_ETH=this_week; treatyType_Eth=201801190020060; currency=1; locale=zh_CN; ref=\"https://www.okex.com/c2c/trade/openTrade.do\"; JSESSIONID=F2A4CBFD3920776FD9187A67DC48FE2D; Hm_lvt_b4e1f9d04a77cfd5db302bc2bcc6fe45=1515496192,1515674139,1515712112,1515748299; Hm_lpvt_b4e1f9d04a77cfd5db302bc2bcc6fe45=1515753222; open-base-currency=cny; open-trade-currency=eth";
+    public static void init(){
         okExClient = getOkExHttpClient(cookie);
         otcClient = new org.apache.commons.httpclient.HttpClient(new MultiThreadedHttpConnectionManager());;
     }
 
     public static void main(String[] args) throws InterruptedException {
-        if(args == null || args[0].length()<50){
-            System.out.println("invalid input...");
-            return;
-        }
-        init(args[0]);
-        if(args.length>1){
-            Double inner = Double.valueOf(args[1]);
-            Listener.inter = inner;
-        }
+        init();
         OKExApi btc = new OKExBtcListener(okExClient);
         OtcBtcApi otBtc = new OTCBtcBtcListener(otcClient);
         List<Earn> btcList = new ArrayList<>();

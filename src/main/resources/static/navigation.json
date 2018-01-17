@@ -70,11 +70,11 @@
     }]
   },
   {
-    "path":"#account",
+    "path":"#otcpri",
     "pageFragments":[{
       "scope":"#container",
-      "templatePath":"templates/okex/account",
-      "vmPath":"js/okex/account",
+      "templatePath":"templates/okex/otcpri",
+      "vmPath":"js/okex/otcpri",
       "init":"",
       "afterRender":"after"
     }]

@@ -9,6 +9,7 @@ public class OKex implements Serializable{
     private String contract_id;
     private Double last;
     private Double index;
+    private Double rate;
     public OKex(){}
     public OKex(Map<String,Map<String,Object>> map,Double index){
         ObjectMapper mapper = new ObjectMapper();
@@ -19,6 +20,9 @@ public class OKex implements Serializable{
     }
 
     public String getContract_id() {
+        if(contract_id.indexOf("PRI")>-1){
+            return contract_id;
+        }
         return contract_id.substring(4,8);
     }
 
@@ -40,5 +44,13 @@ public class OKex implements Serializable{
 
     public void setIndex(Double index) {
         this.index = index;
+    }
+
+    public Double getRate() {
+        return rate;
+    }
+
+    public void setRate(Double rate) {
+        this.rate = rate;
     }
 }

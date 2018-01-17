@@ -2,7 +2,6 @@ package com.example.ico.trade.okex.entity;
 
 import com.example.db.PriceDB;
 
-import javax.persistence.Transient;
 import java.io.Serializable;
 
 public class FeatureOwn implements Serializable{

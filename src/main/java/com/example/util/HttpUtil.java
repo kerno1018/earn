@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class HttpUtil {
-    static HttpClient  client = new HttpClient(new MultiThreadedHttpConnectionManager());
+    public static HttpClient  client = new HttpClient(new MultiThreadedHttpConnectionManager());
 
     public static String getResponse(String url){
         GetMethod method = new GetMethod(url);
