@@ -5,6 +5,7 @@ import com.example.util.HttpUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import example.BTC.OTCBtcBtcListener;
 import example.ETH.OtcBtcBNBListener;
+import example.ETH.OtcBtcEosListener;
 import example.ETH.OtcBtcEthListener;
 import example.Listener.OtcBtcApi;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class OKEXDao {
         btc.update();
         OKex btcIndex = new OKex();
         btcIndex.setContract_id("BTC_OTC_PRI");
-        btcIndex.setIndex(getBTCPriceFromKraken()*rate);
+        btcIndex.setIndex(getBTCPriceFromKraken());
         btcIndex.setRate(rate);
         btcIndex.setLast(btc.price);
         result.add(btcIndex);
@@ -38,10 +39,25 @@ public class OKEXDao {
         eth.update();
         OKex ethIndex = new OKex();
         ethIndex.setContract_id("ETH_OTC_PRI");
-        ethIndex.setIndex(getETHPriceFromKraken()*rate);
+        ethIndex.setIndex(getETHPriceFromKraken());
         ethIndex.setLast(eth.price);
         ethIndex.setRate(rate);
         result.add(ethIndex);
+        Double eosId= 0.0;
+        try {
+            Map map = (Map) mapp.readValue(HttpUtil.getResponse("https://www.okex.com/api/v1/ticker.do?symbol=eos_usdt"),Map.class).get("ticker");
+            eosId = Double.valueOf(map.get("last").toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        OtcBtcApi eos = new OtcBtcEosListener(HttpUtil.client);
+        eos.update();
+        OKex eosIndex = new OKex();
+        eosIndex.setContract_id("EOS_OTC_PRI");
+        eosIndex.setIndex(eosId);
+        eosIndex.setLast(eos.price);
+        eosIndex.setRate(rate);
+        result.add(eosIndex);
         Double bnbId= 0.0;
         try {
             bnbId = Double.valueOf(mapp.readValue(HttpUtil.getResponse("https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT"),Map.class).get("price").toString());
@@ -54,7 +70,7 @@ public class OKEXDao {
         bnbIndex.setContract_id("BNB_OTC_PRI");
         bnbIndex.setRate(rate);
         bnbIndex.setLast(bnb.price);
-        bnbIndex.setIndex(bnbId * rate);
+        bnbIndex.setIndex(bnbId);
         result.add(bnbIndex);
         return result;
 

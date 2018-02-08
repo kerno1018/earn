@@ -60,11 +60,11 @@
     }]
   },
   {
-    "path":"#orders",
+    "path":"#eoseos",
     "pageFragments":[{
       "scope":"#container",
-      "templatePath":"templates/okex/okexorders",
-      "vmPath":"js/okex/okexorders",
+      "templatePath":"templates/okex/okexfeaturecompare",
+      "vmPath":"js/okex/eoseos",
       "init":"",
       "afterRender":"after"
     }]

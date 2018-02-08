@@ -3,22 +3,15 @@
         <table id="example" class="display" cellspacing="0" width="100%">
             <thead>
             <tr>
-                <th>合约名称</th>
-                <th>合约价格</th>
+                <th>名称</th>
+                <th>线下价格</th>
                 <th>指数价格</th>
                 <th>期限差额</th>
                 <th>升水比例</th>
                 <th>汇率</th>
             </tr>
             </thead>
-            <!--<colgroup>-->
-                <!--<col data="name" title="Name">-->
-                <!--<col data="position" title="Position">-->
-                <!--<col data="office" title="Office">-->
-                <!--<col data="extn" title="Extn." template="<a href='www.baidu.com'>ss</a>">-->
-                <!--<col data="start_date" title="Start Date">-->
-                <!--<col data="salary" title="salary">-->
-            <!--</colgroup>-->
         </table>
+        汇率：<input id="updateRate" data-bind="value:rate" /><input type="button" value="update" data-bind="click:update" />
     </div>
 </div>

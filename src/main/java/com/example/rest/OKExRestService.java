@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -22,6 +23,16 @@ public class OKExRestService {
         List<OKex> result = exDao.getListByType(type);
         if(result == null){
             result = Collections.emptyList();
+        }
+        String typeShow = "BTC";
+        if(type.startsWith("eos")){
+            typeShow = "EOS";
+        }
+        if(type.startsWith("eth")){
+            typeShow = "ETH";
+        }
+        for(OKex ex : result){
+            ex.setContract_id(typeShow+ex.getContract_id());
         }
         Map<String,Object> map = new HashMap<>();
         map.put("data",result);
@@ -55,14 +66,19 @@ public class OKExRestService {
         return "";
     }
 
+    @GetMapping("/rate")
+    public Double getRate() throws IOException {
+        return exDao.processRate();
+    }
+
     @GetMapping("/listex")
     public String lbex(@RequestParam("coinType") String type){
         List<OKex> result = exDao.getListByType(type);
         ArrayList<Map<String,Object>> list = new ArrayList<>();
         Map<String,Object> values ;
         String typeShow = "BTC";
-        if(type.startsWith("ltc")){
-            typeShow = "LTC";
+        if(type.startsWith("eos")){
+            typeShow = "EOS";
         }
         if(type.startsWith("eth")){
             typeShow = "ETH";

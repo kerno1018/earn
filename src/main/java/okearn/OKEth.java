@@ -23,6 +23,7 @@ public class OKEth {
             //currency
             String currencyUrl = "https://www.okex.com/api/v1/ticker.do?symbol=eth_btc";
             Double currency = processCurrency(HttpUtilManager.getInstance().requestHttpGet(currencyUrl, "", null));
+            System.out.println(currency);
             //eth
             String ethUrl = "https://www.okex.com/v2/c2c-open/tradingOrders/group?digitalCurrencySymbol=eth&legalCurrencySymbol=cny";
             Double[] sellETH = processBE(HttpUtilManager.getInstance().requestHttpGet(ethUrl, "", null), "buyTradingOrders");

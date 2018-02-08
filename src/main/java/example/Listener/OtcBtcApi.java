@@ -1,10 +1,12 @@
 package example.Listener;
 
+import com.example.ico.trade.okex.rest.HttpUtilManager;
 import example.ETH.Earn;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.http.HttpException;
 import org.jsoup.Jsoup;
 
 import java.io.BufferedReader;
@@ -20,11 +22,13 @@ public abstract class OtcBtcApi extends Earn {
     public abstract String getUrl();
 
     public void update(){
-        GetMethod get = new GetMethod(getUrl());
+        GetMethod get = new GetMethod();
         String response = null;
         try {
-            response = processResponse(httpClient,get);
+            response = HttpUtilManager.getInstance().requestHttpGet(getUrl(),"","");
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (HttpException e) {
             e.printStackTrace();
         }
         org.jsoup.nodes.Document doc = Jsoup.parse(response, "UTF-8");

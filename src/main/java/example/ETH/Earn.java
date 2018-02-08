@@ -1,5 +1,6 @@
 package example.ETH;
 
+import com.example.ico.trade.okex.rest.HttpUtilManager;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
@@ -16,29 +17,9 @@ public abstract class Earn {
     public Double price;
     public abstract void update();
     protected  String processResponse(HttpClient client, HttpMethod method) throws IOException {
-        int code = client.executeMethod(method);
-        StringBuffer temp = new StringBuffer();
-        try{
-            if(code == 200) {
-                InputStream is = method.getResponseBodyAsStream();
-                InputStreamReader ir = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(ir);
-                String tempLine = br.readLine();
-                while (tempLine != null) {
-                    temp.append(tempLine);
-                    tempLine = br.readLine();
-                }
-                br.close();
-                ir.close();
-                is.close();
 
-            }
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }finally {
-            method.releaseConnection();
-        }
-        return temp.toString();
+//        HttpUtilManager.getInstance().requestHttpGet()
+        return "";
     }
 
 

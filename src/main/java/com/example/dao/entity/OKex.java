@@ -23,6 +23,9 @@ public class OKex implements Serializable{
         if(contract_id.indexOf("PRI")>-1){
             return contract_id;
         }
+        if(contract_id.length()<8){
+            return contract_id;
+        }
         return contract_id.substring(4,8);
     }
 

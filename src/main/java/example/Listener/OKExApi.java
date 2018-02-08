@@ -1,11 +1,13 @@
 package example.Listener;
 
+import com.example.ico.trade.okex.rest.HttpUtilManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import example.ETH.Earn;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.http.HttpException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,11 +23,13 @@ public abstract class OKExApi extends Earn {
     }
     protected abstract String getUrl();
     public void update(){
-        GetMethod get = new GetMethod(getUrl());
-        String response = null;
+        GetMethod get = new GetMethod();
+        String response = "";
         try {
-            response = processResponse(httpClient,get);
+            response = HttpUtilManager.getInstance().requestHttpGet(getUrl(),"","");
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (HttpException e) {
             e.printStackTrace();
         }
         ObjectMapper mapp = new ObjectMapper();
